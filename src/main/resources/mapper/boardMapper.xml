@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreaIT.www.repository.BoardDAO">
+	
+	<insert id="insert">
+		insert into board (title, writer, content)
+			values (#{title}, #{writer}, #{content})
+	</insert>
+	
+	<select id="getBno" resultType="long">
+		select max(bno) from board;
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(bno) from board where is_del = 'N'
+		<include refid="search"></include>
+	</select>
+	
+	<update id="updateFileQty">
+		update board set file_qty = file_qty + #{length} where bno = #{bno}
+	</update>
+	
+	<select id="getBoardList" resultType="com.koreaIT.www.domain.BoardVO">
+		select * from board where is_del = 'N'
+		<include refid="search"></include>
+		order by bno desc limit #{pageStart}, #{qty}
+	</select>
+	
+	<update id="updateCount">
+		update board set read_count = read_count + #{i} where bno = #{bno} 
+	</update>
+	
+	<select id="getDetail" resultType="com.koreaIT.www.domain.BoardVO">
+		select * from board where bno = #{bno}
+	</select>
+	
+	<update id="updateBoard">
+		update board set title = #{title}, content = #{content}, reg_date = now()
+			where bno = #{bno}
+	</update>
+	
+	
+	
+	
+	
+	<sql id="search">
+		<if test="type != null">
+			<trim prefix="and (" suffix=")" suffixOverrides="or">
+				<foreach collection="typeToArray" item="type">
+					<trim suffix="or">
+						<choose>
+							<when test="type == 't'.toString">
+									title like concat('%', #{keyword}, '%')						
+							</when>
+							<when test="type == 'w'.toString">
+									writer like concat('%', #{keyword}, '%')						
+							</when>
+							<when test="type == 'c'.toString">
+									content like concat('%', #{keyword}, '%')						
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>			
+		</if>
+		
+	</sql>
+	
+</mapper>

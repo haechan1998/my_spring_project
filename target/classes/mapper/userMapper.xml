@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreaIT.www.repository.UserDAO">
+	
+	<update id="failedLogin">
+		update user set failed_attempts = failed_attempts + 1 where user_id = #{userId}
+	</update>
+	
+	<select id="getFailedAttemps" resultType="int">
+		select failed_attempts from user where user_id = #{userId} 
+	</select>
+	
+	<update id="accountRock">
+		update user set is_account_rock = true where user_id = #{userId}
+	</update>
+	
+	<update id="updateLastLogin">
+		update user set last_login = now() where user_id = #{userId}
+	</update>
+	
+	<update id="resetFailedAttempts">
+		update user set failed_attempts = 0 where user_id = #{userId}
+	</update>
+	
+	<select id="getUser" resultType="com.koreaIT.www.domain.UserVO">
+		select * from user where user_id = #{userId} 
+	</select>
+	
+	<select id="getAuthList" resultType="com.koreaIT.www.domain.AuthVO">
+		select * from auth where user_id = #{userId}
+	</select>
+	
+	<insert id="insert">
+		insert into user(user_id, password, name, nickName, email, phone)
+				values(#{userId}, #{password}, #{name}, #{nickName}, #{email}, #{phone})
+	</insert>
+	
+	<insert id="insertAuthInit">
+		insert into auth(user_id, auth)
+			values(#{userId}, 'ROLE_USER')
+	</insert>
+	
+	
+	
+</mapper>

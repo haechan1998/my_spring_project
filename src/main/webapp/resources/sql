@@ -1,0 +1,85 @@
+개인 프로젝트 db 생성
+create database my_springdb;
+
+권한 부여
+grant all privileges on my_springdb.* to 'springuser'@'localhost';
+flush privileges;
+
+board 테이블 생성
+테이블에서 필요한 요소들은
+번호
+제목
+작성자
+삭제유무
+작성일자
+조회수
+게시물신고 횟수
+
+create table board(
+bno bigint not null auto_increment,
+title varchar(200) not null,
+writer varchar(200) not null,
+content text,
+is_del varchar(5) default 'N',
+reg_date datetime default now(),
+read_count int default 0,
+report_count int default 0,
+file_qty int default 0,
+primary key(bno));
+
+ban 테이블 생성
+create table ban(
+user_id varchar(100),
+email varchar(50) not null,
+reg_date datetime default now(),
+day5 int default 0,
+day10 int default 0,
+day15 int default 0,
+permanent int default 0,
+primary key(user_id));
+
+권한 테이블 생성
+
+create table auth(
+id bigint auto_increment,
+user_id varchar(256) not null,
+auth varchar(20) not null,
+primary key(id),
+foreign key(user_id) references user(user_id));
+
+user 테이블 생성
+
+create table user(
+user_id varchar(100),
+password varchar(256) not null,
+name varchar(20) not null,
+nickName varchar(50) not null,
+email varchar(50) not null,
+phone varchar(20) not null,
+reg_date datetime default now(),
+is_ban varchar(1) default 'N',
+is_account_rock boolean default false,
+failed_attempts int default 0,
+primary key(user_id));
+
+file 테이블 생성
+
+create table file(
+uuid varchar(256),
+save_dir varchar(256) not null,
+file_name varchar(256) not null,
+file_type tinyint(1) default 0,
+bno bigint not null,
+file_size bigint,
+reg_date datetime default now(),
+primary key(uuid));
+
+
+
+
+
+
+
+
+
+
