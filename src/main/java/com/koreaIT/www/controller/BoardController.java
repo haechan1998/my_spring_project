@@ -3,7 +3,6 @@ package com.koreaIT.www.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.koreaIT.www.domain.BoardDTO;
 import com.koreaIT.www.domain.BoardVO;
 import com.koreaIT.www.domain.FileVO;
-import com.koreaIT.www.domain.PagingVO;
 import com.koreaIT.www.handler.FileHandler;
-import com.koreaIT.www.handler.PagingHandler;
 import com.koreaIT.www.service.BoardService;
 
 import lombok.RequiredArgsConstructor;

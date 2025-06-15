@@ -6,4 +6,6 @@ public interface UserService {
 
 	int insert(UserVO uvo);
 
+	UserVO checkId(UserVO uvo);
+
 }

@@ -42,6 +42,10 @@
 			values(#{userId}, 'ROLE_USER')
 	</insert>
 	
+	<select id="checkId" resultType="com.koreaIT.www.domain.UserVO">
+		select * from user where user_id = #{userId}
+	</select>
+	
 	
 	
 </mapper>

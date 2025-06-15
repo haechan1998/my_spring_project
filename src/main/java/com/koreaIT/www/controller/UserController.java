@@ -2,10 +2,13 @@ package com.koreaIT.www.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,6 +45,9 @@ public class UserController {
 	
 	@PostMapping("/register")
 	public String register(UserVO uvo) {
+		
+		// 비동기로 로그인 중복 검사 실행 후 회원가입 처리 완료 시키기
+		
 		// 회원가입 처리
 		// password 암호화
 		log.info(">>>> uvo > {}", uvo);
@@ -52,6 +58,18 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+	@PostMapping("isDuplicate")
+	public ResponseEntity<String> isDuplicate(@RequestBody UserVO uvo){
+		
+		// 
+		UserVO checkUvo = usv.checkId(uvo);
+		log.info(">>>> uvo > {}", uvo);
+		log.info(">>>> userId > {}", uvo.getUserId());
+		log.info(">>>> checkUvo > {}", checkUvo);
+		
+		return checkUvo == null ? new ResponseEntity<String>("ok", HttpStatus.OK) : // 200
+			new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR); // 500
+	}
 	
 	
 	

@@ -23,4 +23,10 @@ public class UserServiceImpl implements UserService {
 		return udao.insertAuthInit(uvo.getUserId());
 	}
 
+	@Override
+	public UserVO checkId(UserVO uvo) {
+		// TODO Auto-generated method stub
+		return udao.checkId(uvo);
+	}
+
 }

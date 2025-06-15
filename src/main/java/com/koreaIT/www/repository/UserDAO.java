@@ -25,4 +25,6 @@ public interface UserDAO {
 
 	int insertAuthInit(String userId);
 
+	UserVO checkId(UserVO uvo);
+
 }

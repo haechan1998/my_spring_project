@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 public class BoardVO {
 	
 	private long bno;
@@ -25,5 +24,9 @@ public class BoardVO {
 	
 	// 기본적인 테스트를 완료하고
 	// 사용자 id를 board 의 작성자로 빼자
-
+	
+	
+	
+	
+	
 }

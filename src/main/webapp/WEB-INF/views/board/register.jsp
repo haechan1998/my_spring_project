@@ -1,17 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
     
 <jsp:include page="../layout/header.jsp"></jsp:include>
 	
 	<div class="inner registerInner">
 		<form action="/board/insert" method="post" enctype="multipart/form-data" class="registerForm">
 			<ul>
+			<sec:authentication property="principal" var="pri"/>
 				<li>
-					input<input type="text" name="title">
+					title<input type="text" name="title">
 				</li>
 				
 				<li>
-					writer<input type="text" name="writer">
+					writer<input type="text" name="writer" value="${pri.uvo.nickName }" readonly="readonly">
 				</li>
 				
 				<li>
