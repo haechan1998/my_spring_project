@@ -2,6 +2,7 @@ package com.koreaIT.www.handler;
 
 import java.util.List;
 
+import com.koreaIT.www.domain.CommentVO;
 import com.koreaIT.www.domain.PagingVO;
 
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class PagingHandler {
 	private int realEndPage; // 진짜 끝 페이지
 	
 	// 댓글 페이징을 위한 List<CommentVO> 추가
-//	private List<CommentVO> cmtList;
+	private List<CommentVO> cmtList;
 	
 	// 생성자에서 모든 값을 계산
 	public PagingHandler(int totalCount, PagingVO pgvo) {
@@ -58,9 +59,9 @@ public class PagingHandler {
 		
 	}
 	
-//	// 댓글용 생성자
-//	public PagingHandler(int totalCount, PagingVO pgvo, List<CommentVO> cmtList) {
-//		this(totalCount, pgvo);
-//		this.cmtList = cmtList;
-//	}
+	// 댓글용 생성자
+	public PagingHandler(int totalCount, PagingVO pgvo, List<CommentVO> cmtList) {
+		this(totalCount, pgvo);
+		this.cmtList = cmtList;
+	}
 }

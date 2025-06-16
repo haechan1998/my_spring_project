@@ -12,4 +12,20 @@
 		delete from ban where user_id = #{userId}
 	</delete>
 	
+	<select id="getExpiredBanUsers" resultType="com.koreaIT.www.domain.BanVO">
+	  <![CDATA[
+	    SELECT * FROM ban
+	    WHERE
+	      (restriction = '5일' AND reg_date < NOW() - INTERVAL 5 DAY)
+	      OR
+	      (restriction = '10일' AND reg_date < NOW() - INTERVAL 10 DAY)
+	      OR
+	      (restriction = '15일' AND reg_date < NOW() - INTERVAL 15 DAY)
+	  ]]>
+	</select>
+	
+	<delete id="deleteBanByUserId">
+		delete from ban where user_id = #{userId}
+	</delete>
+	
 </mapper>

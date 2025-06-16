@@ -15,6 +15,8 @@ board 테이블 생성
 조회수
 게시물신고 횟수
 
+board 테이블 생성 (수정) 250616
+
 create table board(
 bno bigint not null auto_increment,
 title varchar(200) not null,
@@ -25,6 +27,7 @@ reg_date datetime default now(),
 read_count int default 0,
 report_count int default 0,
 file_qty int default 0,
+cmt_qty int default 0,
 primary key(bno));
 
 
@@ -73,9 +76,15 @@ file_size bigint,
 reg_date datetime default now(),
 primary key(uuid));
 
+comment 테이블 생성
 
-
-
+create table comment(
+cno bigint auto_increment,
+bno bigint not null,
+writer varchar(500) not null,
+content text,
+reg_date datetime default now(),
+primary key(cno));
 
 
 

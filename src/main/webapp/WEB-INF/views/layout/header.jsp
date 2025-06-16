@@ -25,37 +25,43 @@
 				<li>
 					<a href="/board/register">게시물 등록</a>
 				</li>
-				<li>
-					<a href="/user/login">로그인</a>
-				</li>
-				<li>
-					<a href="/user/register">회원가입</a>
-				</li>
-				<li>
+				<sec:authorize access="isAnonymous()">
+					<li>
+						<a href="/user/login">로그인</a>
+					</li>
+					<li>
+						<a href="/user/register">회원가입</a>
+					</li>
+				</sec:authorize>
 				
-				<form action="/user/logout" method="post" id="looutForm">
-					<a href="" id="logoutLick">로그아웃</a>
-				</form>
-				</li>
-				<li>
-					<a href="/user/userDetail">내정보</a>
-				</li>
-				<!-- ADMIN 일 경우 나타내는 정보 -->
-				<li>
-					<a>신고내역</a>
-				</li>
-				<!-- 가입 일자 비교해서 신규 유저 위 -->
-				<!-- 가입 일자 비교해서 올드 유저 아래-->
-				<li>
-					<a href="/user/userList">유저리스트</a>
-				</li>
+				<sec:authorize access="isAuthenticated()">
+					<li>
+						<form action="/user/logout" method="post" id="looutForm">
+							<a href="" id="logoutLick">로그아웃</a>
+						</form>
+					</li>
+					<li>
+						<a href="/user/userDetail">${pri.uvo.userId }내정보</a>
+					</li>
+					<c:if test="${pri.uvo.authList.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">
+						<!-- ADMIN 일 경우 나타내는 정보 -->
+						<li>
+							<a>신고내역</a>
+						</li>
+						<!-- 가입 일자 비교해서 신규 유저 위 -->
+						<!-- 가입 일자 비교해서 올드 유저 아래-->
+						<li>
+							<a href="/user/userList">유저리스트</a>
+						</li>
+					</c:if>
+				</sec:authorize>
 				
 			</ul>			
 		</div>
 		
 		<script type="text/javascript">
 			document.getElementById('logoutLick').addEventListener('click', (e) => {
-		    e.preventDefault
+		    e.preventDefault();
 		    document.getElementById('looutForm').submit();
 		})
 		</script>

@@ -20,4 +20,10 @@ public interface UserService {
 
 	void userUnRock(UserVO uvo);
 
+	int withdrawMembership(String userId);
+
+	int userModify(UserVO uvo);
+
+	int userPwdModify(UserVO uvo);
+
 }

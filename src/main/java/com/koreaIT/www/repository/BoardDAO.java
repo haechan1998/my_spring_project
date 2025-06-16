@@ -14,6 +14,8 @@ public interface BoardDAO {
 	long getBno();
 
 	int updateFileQty(@Param("bno") long bno, @Param("length") int length);
+	
+	int updateCmtQty(@Param("bno") long bno,@Param("i") int i);
 
 	int getTotalCount(PagingVO pgvo);
 
@@ -24,5 +26,9 @@ public interface BoardDAO {
 	BoardVO getDetail(long bno);
 
 	int updateBoard(BoardVO bvo);
+
+	int remove(long bno);
+
+	int removeFileQtyUpdate(long bno);
 
 }

@@ -22,12 +22,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	private final BoardDAO bdao;
 	private final FileDAO fdao;
-
-	@Override
-	public List<BoardVO> getList(BoardVO bvo) {
-		return null;
-	}
-
+	
+	@Transactional
 	@Override
 	public int insert(BoardDTO bdto, int length) {
 		// BoardDTO => BoardVO + fileList
@@ -79,7 +75,7 @@ public class BoardServiceImpl implements BoardService{
 		return bdto;
 	}
 	
-	@Transactional
+	@Transactional	
 	@Override
 	public int updateBoard(BoardDTO boardDTO) {
 		
@@ -104,6 +100,25 @@ public class BoardServiceImpl implements BoardService{
 		return isOk;
 		
 	}
+
+	@Override
+	public int remove(long bno) {
+		// TODO Auto-generated method stub
+		return bdao.remove(bno);
+	}
+
+	@Transactional
+	@Override
+	public int removeFile(String uuid) {
+		// TODO Auto-generated method stub
+		long bno = fdao.getBno(uuid);
+		int isOk = fdao.removeFile(uuid);
+		if(isOk > 0) {
+			isOk *= bdao.removeFileQtyUpdate(bno);
+		}
+		return isOk;
+	}
+
 	
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.koreaIT.www.domain.BanVO;
 import com.koreaIT.www.domain.UserVO;
 import com.koreaIT.www.repository.BanDAO;
 import com.koreaIT.www.repository.UserDAO;
@@ -19,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 	
 	private final UserDAO udao;
-	private final BanDAO bdao;
+	private final BanDAO bandao;
 
 	@Transactional
 	@Override
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	public int userRestriction(String selected, UserVO uvo) {
 		log.info(">>> isBan > {}",uvo.getIsBan());
 		if(uvo.getIsBan().equals("N")) {
-			bdao.insertBan(uvo.getUserId(), uvo.getEmail(), selected);
+			bandao.insertBan(uvo.getUserId(), uvo.getEmail(), selected);
 			
 		}
 		
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		if(uvo.getIsBan().equals("Y")) {
 			udao.userUnban(uvo.getUserId(), uvo.getEmail());
 		}
-		bdao.deleteBan(uvo.getUserId());
+		bandao.deleteBan(uvo.getUserId());
 		
 		
 		
@@ -81,6 +80,29 @@ public class UserServiceImpl implements UserService {
 	public void userUnRock(UserVO uvo) {
 		udao.userUnRock(uvo.getUserId());
 		
+	}
+
+	@Override
+	public int withdrawMembership(String userId) {
+		int isOk = udao.withdrawMembershipAuth(userId);
+		isOk *= udao.withdrawMembership(userId);
+		return isOk;
+	}
+
+	@Transactional
+	@Override
+	public int userModify(UserVO uvo) {
+		int isOk = udao.userModify(uvo);
+		
+		return isOk;
+	}
+	
+	@Transactional
+	@Override
+	public int userPwdModify(UserVO uvo) {
+		int isOk = udao.userPwdModify(uvo);
+		
+		return isOk;
 	}
 
 }

@@ -8,7 +8,6 @@ import com.koreaIT.www.domain.PagingVO;
 
 public interface BoardService {
 
-	List<BoardVO> getList(BoardVO bvo);
 
 	int insert(BoardDTO bdto, int length);
 
@@ -21,5 +20,9 @@ public interface BoardService {
 	BoardDTO getDetail(long bno);
 
 	int updateBoard(BoardDTO boardDTO);
+
+	int remove(long bno);
+
+	int removeFile(String uuid);
 
 }

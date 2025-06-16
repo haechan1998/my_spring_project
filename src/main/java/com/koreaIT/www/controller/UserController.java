@@ -1,17 +1,22 @@
 package com.koreaIT.www.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -130,6 +135,64 @@ public class UserController {
 	
 	@GetMapping("/userDetail")
 	public void userDetail() {}
+	
+	//logout 메서드 구현
+	private void logout(HttpServletRequest request, HttpServletResponse response) {
+		// 내가 로그인한 시큐리티의 authentication 객체
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		new SecurityContextLogoutHandler().logout(request, response, authentication);
+		
+	}
+	
+	@GetMapping("/modify")
+	public void modify() {}
+	
+	@PostMapping("/modify")
+	public String modify(
+			UserVO uvo, RedirectAttributes re,
+			HttpServletRequest request, HttpServletResponse response
+			) {
+		
+		int isOk = 0;
+		
+		if(uvo.getPassword().isEmpty() || uvo.getPassword().length() == 0) {
+			isOk = usv.userModify(uvo);
+		}else {
+			uvo.setPassword(bcEncoder.encode(uvo.getPassword()));
+			isOk = usv.userPwdModify(uvo);
+		}
+		// pwd 가 공백이면 nick_name 만 수정
+		// pwd 가 있다면 pwd를 암호화 하여 다시 저장
+		re.addFlashAttribute("modify_msg", isOk > 0 ? "ok" : "fail");
+		// flash 는 주소표시줄에 띄우지 않는다. 그리고 데이터를 옮기고 나서 바로 삭제.
+		
+		log.info(">>>> modify > {}",isOk > 0 ? "성공" : "실패");
+		
+		// 로그아웃을 하고, 수정이 완료되었다는 메세지
+		// 수정이 완료되면 로그인 페이지로 이동
+		logout(request, response);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/withdrawMembership")
+	public String withdrawMembership(Model m, RedirectAttributes re, Principal pri) {
+		
+		String e = pri.getName(); // Principal 객체는 인증사용자의 username 정보만 가지고 있음.
+		 
+		// Authentication 객체는 인증사용자의 username, authorities 를 가지고 있다.
+		// : credentials 는 암호화로 포장되어있기 때문에 암호화되어있는 값만 가져올 수 있다.
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		String userId = userDetails.getUsername();
+		log.info(">>> userId >{}",userId);
+		int isOk = usv.withdrawMembership(userId);
+		re.addFlashAttribute("remove_msg", isOk > 0 ? "ok" : "fail");
+		
+		return "redirect:/";
+		
+	}
 	
 	
 	

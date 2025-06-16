@@ -39,5 +39,13 @@ public interface UserDAO {
 
 	void userUnRock(String userId);
 
+	int withdrawMembershipAuth(String userId);
+
+	int withdrawMembership(String userId);
+
+	int userModify(UserVO uvo);
+
+	int userPwdModify(UserVO uvo);
+
 
 }

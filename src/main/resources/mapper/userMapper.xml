@@ -66,6 +66,22 @@
 		update user set is_account_rock = false where user_id = #{userId}
 	</update>
 	
+	<delete id="withdrawMembershipAuth">
+		delete from auth where user_id = #{userId}
+	</delete>
+	
+	<delete id="withdrawMembership">
+		delete from user where user_id = #{userId}
+	</delete>
+	
+	<update id="userModify">
+		update user set nickName = #{nickName} where user_id = #{userId}
+	</update>
+	
+	<update id="userPwdModify">
+		update user set password = #{password}, nickName = #{nickName} where user_id = #{userId}
+	</update>
+	
 	
 	
 </mapper>

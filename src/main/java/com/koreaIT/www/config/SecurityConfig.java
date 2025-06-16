@@ -88,8 +88,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		// 다 만들고 나면 권한에 따른 경로 제한 확인 필요
 		//-------------------------------------
 		http.authorizeRequests()
-			.anyRequest().permitAll();
-		
+			.antMatchers("/user/userList").hasRole("ADMIN") // ADMIN 만 접근 가능한 경로
+			.antMatchers(
+					"/","/user/login","/user/register",
+					"/board/detail","/upload/**","/resources/**","/comment/**").permitAll() // 모두가 접근 가능한 경로
+			.anyRequest().authenticated(); // 권한이 있어야 접근 가능한 경로
+			
 		// 로그인 페이지 구성
 		http.formLogin()
 			.usernameParameter("userId")

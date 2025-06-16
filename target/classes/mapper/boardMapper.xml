@@ -22,6 +22,10 @@
 		update board set file_qty = file_qty + #{length} where bno = #{bno}
 	</update>
 	
+	<update id="updateCmtQty">
+		update board set cmt_qty = cmt_qty + #{i} where bno = #{bno}
+	</update>
+	
 	<select id="getBoardList" resultType="com.koreaIT.www.domain.BoardVO">
 		select * from board where is_del = 'N'
 		<include refid="search"></include>
@@ -39,6 +43,10 @@
 	<update id="updateBoard">
 		update board set title = #{title}, content = #{content}, reg_date = now()
 			where bno = #{bno}
+	</update>
+	
+	<update id="removeFileQtyUpdate">
+		update board set file_qty = file_qty - 1 where bno = #{bno}
 	</update>
 	
 	
