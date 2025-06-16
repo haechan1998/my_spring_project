@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koreaIT.www.repository.BanDAO">
+
+	<insert id="insertBan">
+		insert into ban (user_id, email, restriction) values (#{userId}, #{email}, #{selected})
+	</insert>
+	
+	<delete id="deleteBan">
+		delete from ban where user_id = #{userId}
+	</delete>
+	
+</mapper>

@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder);
 		
-		provider.setHideUserNotFoundExceptions(true);
+		provider.setHideUserNotFoundExceptions(false);
 		
 		return provider;
 		

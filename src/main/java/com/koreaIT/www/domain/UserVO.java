@@ -23,7 +23,7 @@ public class UserVO {
 	private String phone;
 	private String regDate;
 	private String lastLogin;
-	private char isBan;
+	private String isBan;
 	private List<AuthVO> authList;
 	private boolean isAccountRock;
 	private int failedAttempts;

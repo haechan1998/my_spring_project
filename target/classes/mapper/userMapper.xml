@@ -8,7 +8,7 @@
 		update user set failed_attempts = failed_attempts + 1 where user_id = #{userId}
 	</update>
 	
-	<select id="getFailedAttemps" resultType="int">
+	<select id="getFailedAttempts" resultType="int">
 		select failed_attempts from user where user_id = #{userId} 
 	</select>
 	
@@ -45,6 +45,26 @@
 	<select id="checkId" resultType="com.koreaIT.www.domain.UserVO">
 		select * from user where user_id = #{userId}
 	</select>
+	
+	<select id="checkNick" resultType="com.koreaIT.www.domain.UserVO">
+		select * from user where nickName = #{nickName}
+	</select>
+	
+	<select id="getUserList" resultType="com.koreaIT.www.domain.UserVO">
+		select * from user
+	</select>
+	
+	<update id="userRestriction">
+		update user set is_ban = 'Y' where user_id = #{userId}
+	</update>
+	
+	<update id="userUnban">
+		update user set is_ban = 'N' where user_id = #{userId}
+	</update>
+	
+	<update id="userUnRock">
+		update user set is_account_rock = false where user_id = #{userId}
+	</update>
 	
 	
 	

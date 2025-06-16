@@ -27,16 +27,15 @@ report_count int default 0,
 file_qty int default 0,
 primary key(bno));
 
-ban 테이블 생성
+
+ban 테이블 생성(수정) 250616
 create table ban(
 user_id varchar(100),
 email varchar(50) not null,
 reg_date datetime default now(),
-day5 int default 0,
-day10 int default 0,
-day15 int default 0,
-permanent int default 0,
+restriction varchar(20) not null,
 primary key(user_id));
+
 
 권한 테이블 생성
 

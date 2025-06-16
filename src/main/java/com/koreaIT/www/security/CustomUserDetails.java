@@ -35,7 +35,8 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		
-		return uvo.getIsBan() != 'Y'; // true 라면 DisabledException 예외 리턴
+		// is_account_rock 인 상황도 체크
+		return uvo.getIsBan().equals("N") && !uvo.isAccountRock(); // true 라면 DisabledException 예외 리턴
 	}
 	
 	// isEnabled 테스트용 오버라이드 (기본값)

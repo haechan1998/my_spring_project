@@ -32,7 +32,7 @@
 		</form>
 		
 		<c:forEach items="${boardList }" var="bvo">
-			<div>${bvo.bno } / ${bvo.title }</div>
+			<div>${bvo.bno } / 제목 : <a href="/board/detail?bno=${bvo.bno }">${bvo.title }</a> / 작성자 : ${bvo.writer} </div>
 		</c:forEach>
 		
 		
